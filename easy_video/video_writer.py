@@ -1,7 +1,7 @@
-from ffmpeg_writer import FFMPEG_VideoWriter, FFMPEG_AudioWriter
-from ffmpeg_infos import ffmpeg_parse_infos
+from .ffmpeg_writer import FFMPEG_VideoWriter, FFMPEG_AudioWriter
+from .ffmpeg_infos import ffmpeg_parse_infos
 
-from video_reader import EasyReader
+from .video_reader import EasyReader
 import os
 import subprocess
 

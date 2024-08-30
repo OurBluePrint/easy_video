@@ -1,5 +1,5 @@
 import subprocess as sp
-from ffmpeg_infos import ffmpeg_parse_infos, cross_platform_popen_params, FFMPEG_BINARY
+from .ffmpeg_infos import ffmpeg_parse_infos, cross_platform_popen_params, FFMPEG_BINARY
 
 class FFMPEGReader:
 

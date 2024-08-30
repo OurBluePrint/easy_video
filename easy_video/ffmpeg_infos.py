@@ -1,11 +1,11 @@
-from utils import convert_to_seconds
+from .utils import convert_to_seconds
 import re
 import warnings
 
 import subprocess as sp
 import os
 
-from os_dependency import FFMPEG_BINARY, cross_platform_popen_params
+from .os_dependency import FFMPEG_BINARY, cross_platform_popen_params
 
 class FFmpegInfosParser:
     """Finite state ffmpeg `-i` command option file information parser.

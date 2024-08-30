@@ -1,5 +1,5 @@
 import subprocess as sp
-from ffmpeg_infos import cross_platform_popen_params, FFMPEG_BINARY
+from .ffmpeg_infos import cross_platform_popen_params, FFMPEG_BINARY
 
 from tqdm import tqdm
 

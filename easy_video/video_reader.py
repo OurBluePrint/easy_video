@@ -1,4 +1,4 @@
-from ffmpeg_reader import FFMPEGReader
+from .ffmpeg_reader import FFMPEGReader
 import psutil
 import numpy as np
 import random
