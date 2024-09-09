@@ -1,3 +1,5 @@
+import os
+
 def convert_to_seconds(time):
     """Will convert any time into seconds.
 
@@ -30,3 +32,19 @@ def convert_to_seconds(time):
         return time
 
     return sum(mult * part for mult, part in zip(factors, reversed(time)))
+
+
+def mp4list(path):
+    """
+    Get all mp4 files in the given path. but not in the .subfolders
+    """
+    if path.endswith(".mp4"):
+        return [path]
+    mp4_files = []
+    for root, dirs, files in os.walk(path):
+        if any(part.startswith('.') for part in root.split(os.sep)):
+            continue
+        for file in files:
+            if file.endswith(".mp4"):
+                mp4_files.append(os.path.join(root, file))
+    return mp4_files 
