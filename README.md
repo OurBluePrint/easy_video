@@ -54,6 +54,17 @@ audio_array = reader.get_audio_array()
 print(audio_array.shape) # (16000 * audio_duration, 1)
 ```
 
+### Usful information
+```
+reader.video_fps
+reader.duration
+reader.n_frames
+
+reader.audio_fps
+reader.audio_duration
+reader.audio_n_frames
+```
+
 ### write video
 ```
 from easy_video import EasyReader, EasyWriter

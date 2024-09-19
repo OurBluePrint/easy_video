@@ -75,6 +75,7 @@ class EasyWriter:
                 nbytes=audio_nbytes,
                 nchannels=audio_nchannels,
             )
+            print("\033[92m Audio Writing... \033[0m")
             audio_clip.write_frames_chunk(audio_array)
             audio_clip.close()
 

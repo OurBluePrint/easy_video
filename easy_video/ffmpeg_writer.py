@@ -206,7 +206,7 @@ class FFMPEG_VideoWriter:
             "-",
         ]
         if audiofile is not None:
-            cmd.extend(["-i", audiofile, "-acodec", "copy"])
+            cmd.extend(["-i", audiofile, "-acodec", "aac"])
         cmd.extend(["-vcodec", codec, "-preset", preset])
         if ffmpeg_params is not None:
             cmd.extend(ffmpeg_params)
@@ -223,7 +223,6 @@ class FFMPEG_VideoWriter:
         popen_params = cross_platform_popen_params(
             {"stdout": sp.DEVNULL, "stderr": logfile, "stdin": sp.PIPE}
         )
-
         self.proc = sp.Popen(cmd, **popen_params)
 
     def write_frames(self, frames_array):
