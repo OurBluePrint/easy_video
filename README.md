@@ -72,6 +72,7 @@ print(random_frame.shape) # (1, 1080, 1920, 3)
 
 - video array is numpy array with shape (n_frames, height, width, n_channels), and 0~255 values.
 - audio array is numpy array with shape (audio_n_frames, audio_n_channels), and 0~1 values (normalized).
+- Of course, **video and audio are synchronized.** You can change audio sampling rate and number of channels by `audio_fps` and `audio_nchannels` options.
 
 ### read only audio
 ```python
