@@ -18,6 +18,7 @@ class EasyWriter:
             audio_fps=None,
             audio_nbytes=2,
             audio_nchannels=2,
+            is_raw_audio=False,
     ):
 
         if get_info_from != None:
@@ -46,6 +47,7 @@ class EasyWriter:
                 fps_input=audio_fps,
                 nbytes=audio_nbytes,
                 nchannels=audio_nchannels,
+                is_raw_audio=is_raw_audio,
             )
             print("\033[92m Writing... \033[0m")
             audio_clip.write_frames_chunk(audio_array)
@@ -74,6 +76,7 @@ class EasyWriter:
                 fps_input=audio_fps,
                 nbytes=audio_nbytes,
                 nchannels=audio_nchannels,
+                is_raw_audio=is_raw_audio,
             )
             print("\033[92m Audio Writing... \033[0m")
             audio_clip.write_frames_chunk(audio_array)
@@ -134,7 +137,7 @@ class EasyWriter:
 
 if __name__ == "__main__":
     test_video = "/Users/kwonmingi/Codes/macocr/test_vid/vid12_xoobAzitHzs.mp4"
-    from video_reader import EasyReader
+    from easy_video import EasyReader
 
     er = EasyReader(test_video, load_audio=True)
 

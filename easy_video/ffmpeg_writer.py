@@ -16,6 +16,7 @@ class FFMPEG_AudioWriter:
         logfile=None,
         ffmpeg_params=None,
         chunk_size=4096,
+        is_raw_audio=False,
     ):
         if logfile is None:
             logfile = sp.PIPE
@@ -66,8 +67,11 @@ class FFMPEG_AudioWriter:
         self.proc = sp.Popen(cmd, **popen_params)
 
         self.chunk_size = chunk_size
+        self.is_raw_audio = is_raw_audio
 
     def audio_array_to_bytes(self, audio_array):
+        if self.is_raw_audio:
+            return audio_array.tobytes()
         audio_array = (audio_array * 2 ** (8 * self.nbytes - 1)).astype(f"int{8*self.nbytes}")
         return audio_array.tobytes()
 
@@ -317,7 +321,7 @@ class FFMPEG_VideoWriter:
 
 if __name__ == "__main__":
     test_video = "/Users/kwonmingi/Codes/macocr/test_vid/vid12_xoobAzitHzs.mp4"
-    from video_reader import EasyReader
+    from easy_video import EasyReader
 
     er = EasyReader(test_video, load_audio=True)
     vw = FFMPEG_VideoWriter("test.mp4", er.size, er.video_fps)

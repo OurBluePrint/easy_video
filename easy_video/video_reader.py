@@ -225,7 +225,7 @@ class EasyReader(FFMPEGReader):
         result.shape = (len(s)//self.frame_bytesize,self.h,self.w,self.depth)
         return result
     
-    def get_audios(self, audio_n_frames):
+    def get_audios(self, audio_n_frames, is_raw_audio=False):
         """
         Get n_frames from the audio process stdout
         return a numpy array of shape (n_frames, n_channels), (0~255)
@@ -238,6 +238,8 @@ class EasyReader(FFMPEGReader):
         s = self.audio_proc.stdout.read(read_nbytes)
 
         result = np.frombuffer(s, dtype=self.audio_data_type) # need python3
+        if is_raw_audio:
+            return result
         
         result = (1.0 * result / 2 ** (8 * self.audio_nbytes - 1)).reshape(
             (int(len(result) / self.audio_nchannels), self.audio_nchannels)

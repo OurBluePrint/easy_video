@@ -1,9 +1,30 @@
+# Easy Video
+Why do we need to use this repo?
+- Existing video and audio libraries are not easy to use for deep learning research
+- Usually, we need to convert video to png or jpg files and audio to wav files. It is not efficient if the dataset is large.
+- Easy to read video and audio for deep learning research purposes
+- Easy to write video and audio for deep learning research purposes
+
+What this repo can do?
+- Read and write video and audio
+- Memory efficient reading and writing
+
+## Notice
+- We only tested on mp4 format.
+- We only tested on Linux and MacOS.
+- We only tested on Python 3.11
+
 ## Installation
 
 ```
 git clone [this repo]
 pip install -e .
 ```
+
+- ffmpeg is required to read and write video and audio. We don't provide ffmpeg installation guide here. Please refer to [ffmpeg](https://ffmpeg.org/download.html) for installation.
+- python >= 3.6 is required
+- numpy, psutil, tqdm are required
+- torch is required if you want to use utils.py
 
 ## Usage
 
@@ -26,6 +47,8 @@ print(video_array.shape) # (128, 1080, 1920, 3)
 print(random_frame.shape) # (1, 1080, 1920, 3)
 ```
 
+- video array is numpy array with shape (n_frames, height, width, n_channels), and 0~255 values.
+
 ### read video and audio together
 ```
 from easy_video import EasyReader, EasyWriter
@@ -46,6 +69,9 @@ print(audio_array.shape) # (16000 * 128/video_fps, 1)
 print(random_frame.shape) # (1, 1080, 1920, 3)
 ```
 
+- video array is numpy array with shape (n_frames, height, width, n_channels), and 0~255 values.
+- audio array is numpy array with shape (audio_n_frames, audio_n_channels), and 0~1 values (normalized).
+
 ### read only audio
 ```
 from easy_video import EasyReader, EasyWriter
@@ -53,6 +79,7 @@ reader = EasyReader('input.mp4', load_video=False, load_audio=True, audio_fps=16
 audio_array = reader.get_audio_array()
 print(audio_array.shape) # (16000 * audio_duration, 1)
 ```
+- audio array is numpy array with shape (audio_n_frames, audio_n_channels), and 0~1 values (normalized).
 
 ### Usful information
 ```
@@ -82,3 +109,42 @@ EasyWriter.combine_video_audio(video_file, audio_file, output_file) # if output_
 EasyWriter.extract_audio(video_file, output_file) # if output_file is None, it will be the same as video_file_name + '.wav'
 
 ```
+
+### utils
+```
+from easy_video import mp4list, array_video_to_tensor, tensor_video_to_array, resize_video_tensor, centercrop_resize_video_tensor, resize_video_array, centercrop_resize_video_array
+
+mp4_file_list = mp4list('video_folder') # return list of mp4 files in the folder including subfolders
+
+from easy_video import EasyReader, EasyWriter
+reader = EasyReader(mp4_file_list[0], load_video=True, load_audio=False)
+video_array = reader.get_video_array(start=0, end=-1) # read all frames as numpy array
+
+# convert numpy array to torch tensor (0~1)
+video_tensor = array_video_to_tensor(video_array) # (n_frames, n_channels, height, width)
+
+# if you want to convert torch tensor (-1~1), use this
+video_tensor = array_video_to_tensor(video_array, _min=-1, _max=1) # (n_frames, n_channels, height, width)
+
+# convert torch tensor to numpy array
+video_array = tensor_video_to_array(video_tensor) # (n_frames, height, width, n_channels)
+
+# if the torch tensor is not (0~1), need to specify _min and _max
+video_array = tensor_video_to_array(video_tensor, _min=-1, _max=1) # (n_frames, height, width, n_channels)
+
+# resize video tensor
+video_tensor = resize_video_tensor(video_tensor, (256, 256)) # (n_frames, n_channels, 256, 256)
+
+# centercrop and resize video tensor: it crops the center of the video with shorter side and resize it to given size
+video_tensor = centercrop_resize_video_tensor(video_tensor, (256, 256)) # (n_frames, n_channels, 256, 256) 
+
+# resize video array
+video_array = resize_video_array(video_array, (256, 256)) # (n_frames, 256, 256, n_channels)
+
+# centercrop and resize video array: it crops the center of the video with shorter side and resize it to given size
+video_array = centercrop_resize_video_array(video_array, (256, 256)) # (n_frames, 256, 256, n_channels)
+
+```
+
+## Acknowledgement
+- Some codes are from [moviepy](https://zulko.github.io/moviepy/), but I modified a lot.
