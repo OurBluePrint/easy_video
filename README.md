@@ -1,8 +1,8 @@
 # Easy Video
 Why do we need to use this repo?
 - Existing video and audio libraries are not easy to use for deep learning research
-    - For example, moviepy drops frames or duplicates frames when reading video. It is same for audio.
-    - The reason is they are not designed for deep learning research. They are designed for video utility. (One frame dropping/duplicationg is not important for video utility, but it is important for deep learning research)
+    - For example, moviepy **drops frames or duplicates frames** when reading video. It is same for audio.
+    - The reason is they are not designed for deep learning research. They are designed for video utility. (One frame dropping/duplicationg is not important for video utility, but **it is important for deep learning research**)
 - Usually, we need to convert video to png or jpg files and audio to wav files. It is not efficient if the dataset is large.
 - Easy to read video and audio for deep learning research purposes
 - Easy to write video and audio for deep learning research purposes
