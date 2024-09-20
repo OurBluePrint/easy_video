@@ -29,7 +29,7 @@ pip install -e .
 ## Usage
 
 ### read only video
-```
+```python
 from easy_video import EasyReader, EasyWriter
 reader = EasyReader('input.mp4', load_video=True, load_audio=False)
 
@@ -50,7 +50,7 @@ print(random_frame.shape) # (1, 1080, 1920, 3)
 - video array is numpy array with shape (n_frames, height, width, n_channels), and 0~255 values.
 
 ### read video and audio together
-```
+```python
 from easy_video import EasyReader, EasyWriter
 reader = EasyReader('input.mp4', load_video=True, load_audio=True, audio_fps=16000, audio_nchannels=1) # 16kHz & mono
 
@@ -73,7 +73,7 @@ print(random_frame.shape) # (1, 1080, 1920, 3)
 - audio array is numpy array with shape (audio_n_frames, audio_n_channels), and 0~1 values (normalized).
 
 ### read only audio
-```
+```python
 from easy_video import EasyReader, EasyWriter
 reader = EasyReader('input.mp4', load_video=False, load_audio=True, audio_fps=16000, audio_nchannels=1) # 16kHz & mono
 audio_array = reader.get_audio_array()
@@ -93,7 +93,7 @@ reader.audio_n_frames
 ```
 
 ### write video
-```
+```python
 from easy_video import EasyReader, EasyWriter
 EasyWriter.writefile(filename, video_array=video_array, video_fps=30)
 EasyWriter.writefile(filename, video_array=video_array, get_info_from=any_videofilename)
@@ -111,7 +111,7 @@ EasyWriter.extract_audio(video_file, output_file) # if output_file is None, it w
 ```
 
 ### utils
-```
+```python
 from easy_video import mp4list, array_video_to_tensor, tensor_video_to_array, resize_video_tensor, centercrop_resize_video_tensor, resize_video_array, centercrop_resize_video_array
 
 mp4_file_list = mp4list('video_folder') # return list of mp4 files in the folder including subfolders
