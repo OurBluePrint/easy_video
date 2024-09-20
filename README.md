@@ -4,12 +4,11 @@ Why do we need to use this repo?
     - For example, moviepy **drops frames or duplicates frames** when reading video. It is same for audio.
     - The reason is they are not designed for deep learning research. They are designed for video utility. (One frame dropping/duplicating is not important for video utility, but **it is important for deep learning research**)
 - Usually, we need to convert video to png or jpg files and audio to wav files. It is not efficient if the dataset is large.
-- Easy to read video and audio for deep learning research purposes
-- Easy to write video and audio for deep learning research purposes
 
 What this repo can do?
 - Read and write video and audio
 - Memory efficient reading and writing
+- Provide easy conversion between numpy array and torch tensor
 
 ## Notice
 - We only tested on mp4 format.
