@@ -123,6 +123,7 @@ class EasyReader(FFMPEGReader):
             video_array = self.get_frames(end-start)
             self.throw_away_video_frames(random_index-end)
             random_frame = self.get_frames(1)
+            self.now_frame += random_index-end
             return video_array, random_frame
 
     def get_video_array_audio_array_random_frame(self, start=0, end=-1):
@@ -134,17 +135,16 @@ class EasyReader(FFMPEGReader):
             random_frame = self.get_frames(1)
             self.throw_away_video_frames(start-random_index-1)
             video_array = self.get_frames(end-start)
-            
         elif random_index >= start and random_index < end:
             self.throw_away_video_frames(start)
             video_array = self.get_frames(end-start)
             random_frame = video_array[random_index-start:random_index-start+1]
-
         else:
             self.throw_away_video_frames(start)
             video_array = self.get_frames(end-start)
             self.throw_away_video_frames(random_index-end)
             random_frame = self.get_frames(1)
+            self.now_frame += random_index-end
 
         audio_n_frames = self.audio_n_frames_by_video_n_frames(end-start)
         audio_array = self.get_audios(audio_n_frames)
