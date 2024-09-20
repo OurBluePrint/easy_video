@@ -81,6 +81,7 @@ audio_array = reader.get_audio_array()
 print(audio_array.shape) # (16000 * audio_duration, 1)
 ```
 - audio array is numpy array with shape (audio_n_frames, audio_n_channels), and 0~1 values (normalized).
+- if you want to get raw audio array, use `is_raw_audio=True` in `get_audio_array` method. (Not normalized)
 
 ### Usful information
 ```
