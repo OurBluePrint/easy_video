@@ -88,7 +88,7 @@ print(audio_array.shape) # (16000 * audio_duration, 1)
 ```
 reader.video_fps
 reader.duration
-reader.n_frames
+reader.n_frames # this is (fps * duration)+1. It is not exact number of frames. Just for reference. Don't believe this value.
 
 reader.audio_fps
 reader.audio_duration

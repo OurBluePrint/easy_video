@@ -58,7 +58,7 @@ class FFMPEGReader:
             self.resize_algo = resize_algo
 
             self.duration = infos["video_duration"]
-            self.n_frames = infos["video_n_frames"] + 1
+            self.n_frames = infos["video_n_frames"] + 1 # n_frames is duration * fps. So, add 1 for some cases.
             self.bitrate = infos["video_bitrate"]
 
             self.pixel_format = pixel_format
