@@ -91,6 +91,8 @@ class EasyReader(FFMPEGReader):
         for i in range(0, self.n_frames, chunksize):
             array = self.get_frames(chunksize)
             array = array.astype(dtype)
+            if array.shape[0] == 0: # if the last chunk is empty,
+                break
             yield array
 
     def video_array_audio_array_chunk_iterator(self, chunksize=128, dtype=np.uint8):
