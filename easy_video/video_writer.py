@@ -70,17 +70,21 @@ class EasyWriter:
             # need to remove tmp audio file after merge
             file_dir = os.path.dirname(filename)
             file_name = os.path.basename(filename).split(".")[0]
-            audio_tmp = os.path.join(file_dir, f"{TEMP_PREFIX_RANDOMCHARS}{file_name}.wav")
-            audio_clip = FFMPEG_AudioWriter(
-                audio_tmp,
-                fps_input=audio_fps,
-                nbytes=audio_nbytes,
-                nchannels=audio_nchannels,
-                is_raw_audio=is_raw_audio,
-            )
-            print("\033[92m Audio Writing... \033[0m")
-            audio_clip.write_frames_chunk(audio_array)
-            audio_clip.close()
+            
+            if type(audio_array) == str:
+                audio_tmp = audio_array
+            else:
+                audio_tmp = os.path.join(file_dir, f"{TEMP_PREFIX_RANDOMCHARS}{file_name}.wav")
+                audio_clip = FFMPEG_AudioWriter(
+                    audio_tmp,
+                    fps_input=audio_fps,
+                    nbytes=audio_nbytes,
+                    nchannels=audio_nchannels,
+                    is_raw_audio=is_raw_audio,
+                )
+                print("\033[92m Audio Writing... \033[0m")
+                audio_clip.write_frames_chunk(audio_array)
+                audio_clip.close()
 
             video_clip = FFMPEG_VideoWriter(
                 filename,
