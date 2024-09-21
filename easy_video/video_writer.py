@@ -110,7 +110,7 @@ class EasyWriter:
             '-i', video_file,  # 비디오 파일 입력
             '-i', audio_file,  # 오디오 파일 입력
             '-c:v', 'copy',  # 비디오 코덱 복사 (재인코딩 없음)
-            '-c:a', 'copy',  # 오디오를 aac 코덱으로 인코딩
+            '-c:a', 'aac',  # 오디오를 aac 코덱으로 인코딩
             output_file  # 출력 파일 경로
         ]
 
