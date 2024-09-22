@@ -71,8 +71,10 @@ class EasyWriter:
             file_dir = os.path.dirname(filename)
             file_name = os.path.basename(filename).split(".")[0]
             
+            del_audio_tmp = True
             if type(audio_array) == str:
                 audio_tmp = audio_array
+                del_audio_tmp = False
             else:
                 audio_tmp = os.path.join(file_dir, f"{TEMP_PREFIX_RANDOMCHARS}{file_name}.wav")
                 audio_clip = FFMPEG_AudioWriter(
@@ -97,7 +99,8 @@ class EasyWriter:
             print(f"\033[92m Done...!! Saved at {filename}\033[0m")
             video_clip.close()
             
-            os.remove(audio_tmp)
+            if del_audio_tmp:
+                os.remove(audio_tmp)
  
     def combine_video_audio(video_file, audio_file, output_file=""):
         if output_file == "":
