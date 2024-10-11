@@ -59,7 +59,7 @@ class EasyReader(FFMPEGReader):
             assert self.video_found, "Video not found"
             self.video_proc_initialize()
         if self.load_audio:
-            assert self.audio_found, "Audio not found"
+            assert self.audio_found, "Audio not found" 
             self.audio_proc_initialize()
         if self.load_video and self.load_audio:
             video_fps = self.video_fps
@@ -198,6 +198,7 @@ class EasyReader(FFMPEGReader):
 
     def throw_away_video_frames(self, n_frames):
         """Throw away n_frames of data from a process stdout"""
+        self.now_frame += n_frames
         self.throw_away_chunks(self.video_proc, n_frames * self.frame_bytesize)
 
     def throw_away_chunks(self, proc, nbytes):
@@ -255,7 +256,6 @@ if __name__ == '__main__':
                     audio_fps=16000,
                     audio_nchannels=1,
                     )
-    import pdb; pdb.set_trace()
     er.audio_fps
     tmp = er.get_video_array()
     tmp_audio = er.get_audio_array()
