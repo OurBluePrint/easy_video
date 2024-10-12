@@ -73,8 +73,14 @@ class EasyWriter:
             
             del_audio_tmp = True
             if type(audio_array) == str:
-                audio_tmp = audio_array
-                del_audio_tmp = False
+                if audio_array.split(".")[-1] == "mp4":
+                    audio_tmp = os.path.join(file_dir, f"{TEMP_PREFIX_RANDOMCHARS}{file_name}.wav")
+                    EasyWriter.extract_audio(audio_array, audio_tmp)
+                elif audio_array.split(".")[-1] == "wav":
+                    audio_tmp = audio_array
+                    del_audio_tmp = False
+                else:
+                    raise Exception("Only mp4 or wav file is allowed for audio_array as string.")
             else:
                 audio_tmp = os.path.join(file_dir, f"{TEMP_PREFIX_RANDOMCHARS}{file_name}.wav")
                 audio_clip = FFMPEG_AudioWriter(
