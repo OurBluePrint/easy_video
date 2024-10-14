@@ -117,7 +117,8 @@ class EasyWriter:
             file_name = os.path.basename(filename).split(".")[0]
 
             del_audio_tmp = True
-            if isinstance(audio_array, str):
+            # When audio_array is a **file path**
+            if isinstance(audio_array, str):   
                 if audio_array.split(".")[-1] == "mp4":
                     audio_tmp = os.path.join(file_dir, f"{TEMP_PREFIX_RANDOMCHARS}{file_name}.wav")
                     EasyWriter.extract_audio(audio_array, audio_tmp)
@@ -127,18 +128,21 @@ class EasyWriter:
                 else:
                     raise Exception("Only mp4 or wav file is allowed for audio_array as string.")
 
+                # Extract audio segments corresponding to the video segments
                 if multiple_segments:
                     temp_audio_files = EasyWriter._extract_audio_segments(
                         audio_tmp, audio_fps, start_time, end_time
                     )
+                    # Process video segments with corresponding audio segments
                     EasyWriter._process_multiple_video_segments_with_audio(
                         filename, video_array, video_fps, video_size, temp_audio_files,
                         start_time, end_time
                     )
+                    # Clean up temporary audio files
                     if del_audio_tmp:
                         os.remove(audio_tmp)
 
-                else:
+                else:   # process entire video
                     video_clip = FFMPEG_VideoWriter(
                         filename,
                         size=video_size,
@@ -147,22 +151,26 @@ class EasyWriter:
                     )
                     print("\033[92m Writing video with audio... \033[0m")
                     video_clip.write_frames_chunk(video_array)
+                    print(f"\033[92m Done! Saved at {filename}\033[0m")
                     video_clip.close()
 
                     if del_audio_tmp:
                         os.remove(audio_tmp)
 
-            else:
+             # When audio_array is an **array**
+            else:       
                 if multiple_segments:
+                    # Process audio segments individually
                     temp_audio_files = EasyWriter._process_multiple_audio_segments_individual(
                         audio_array, audio_fps, audio_nbytes, audio_nchannels,
                         is_raw_audio, start_time, end_time
                     )
+                    # Process video segments with corresponding audio segments
                     EasyWriter._process_multiple_video_segments_with_audio(
                         filename, video_array, video_fps, video_size, temp_audio_files,
                         start_time, end_time
                     )
-                else:
+                else: # process entire video
                     audio_tmp = os.path.join(file_dir, f"{TEMP_PREFIX_RANDOMCHARS}{file_name}.wav")
                     audio_clip = FFMPEG_AudioWriter(
                         audio_tmp,
@@ -183,6 +191,7 @@ class EasyWriter:
                     )
                     print("\033[92m Writing video with audio... \033[0m")
                     video_clip.write_frames_chunk(video_array)
+                    print(f"\033[92m Done! Saved at {filename}\033[0m")
                     video_clip.close()
 
                     os.remove(audio_tmp)
