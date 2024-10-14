@@ -94,6 +94,7 @@ class EasyWriter:
                 )
                 print("\033[92m Writing audio... \033[0m")
                 audio_clip.write_frames_chunk(audio_array)
+                print(f"\033[92m Done...!! Saved at {filename}\033[0m")
                 audio_clip.close()
 
         elif type(audio_array) == type(None):  # Video only
@@ -110,6 +111,7 @@ class EasyWriter:
                 )
                 print("\033[92m Writing video... \033[0m")
                 video_clip.write_frames_chunk(video_array)
+                print(f"\033[92m Done...!! Saved at {filename}\033[0m")
                 video_clip.close()
 
         else:  # Video and audio
