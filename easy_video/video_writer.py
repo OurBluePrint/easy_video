@@ -19,6 +19,7 @@ class EasyWriter:
             audio_nbytes=2,
             audio_nchannels=2,
             is_raw_audio=False,
+            silent=False
     ):
 
         if get_info_from != None:
@@ -49,9 +50,11 @@ class EasyWriter:
                 nchannels=audio_nchannels,
                 is_raw_audio=is_raw_audio,
             )
-            print("\033[92m Writing... \033[0m")
+            if not silent:
+                print("\033[92m Writing... \033[0m")
             audio_clip.write_frames_chunk(audio_array)
-            print(f"\033[92m Done...!! Saved at {filename}\033[0m")
+            if not silent:
+                print(f"\033[92m Done...!! Saved at {filename}\033[0m")
             audio_clip.close()
 
         elif type(audio_array) == type(None): # video only
@@ -60,9 +63,11 @@ class EasyWriter:
                 size=video_size,
                 fps=video_fps,
             )
-            print("\033[92m Writing... \033[0m")
+            if not silent:
+                print("\033[92m Writing... \033[0m")
             video_clip.write_frames_chunk(video_array)
-            print(f"\033[92m Done...!! Saved at {filename}\033[0m")
+            if not silent:
+                print(f"\033[92m Done...!! Saved at {filename}\033[0m")
             video_clip.close()
 
         else: # video and audio
@@ -90,7 +95,8 @@ class EasyWriter:
                     nchannels=audio_nchannels,
                     is_raw_audio=is_raw_audio,
                 )
-                print("\033[92m Audio Writing... \033[0m")
+                if not silent:
+                    print("\033[92m Audio Writing... \033[0m")
                 audio_clip.write_frames_chunk(audio_array)
                 audio_clip.close()
 
@@ -100,9 +106,11 @@ class EasyWriter:
                 fps=video_fps,
                 audiofile=audio_tmp,
             )
-            print("\033[92m Writing... \033[0m")
+            if not silent:
+                print("\033[92m Writing... \033[0m")
             video_clip.write_frames_chunk(video_array)
-            print(f"\033[92m Done...!! Saved at {filename}\033[0m")
+            if not silent:
+                print(f"\033[92m Done...!! Saved at {filename}\033[0m")
             video_clip.close()
             
             if del_audio_tmp:
