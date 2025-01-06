@@ -29,6 +29,17 @@ pip install -e .
 
 ## Usage
 
+### Update
+- 2025.01.06: target video fps, target resolution.
+
+```python
+reader = EasyReader(...,
+                     target_video_fps=30, # target video fps. If it is None, it will be the same as the original video fps.
+                     target_resolution=(256, 256), # target resolution. If it is None, it will be the same as the original resolution.
+                     )
+```
+
+
 ### read only video
 ```python
 from easy_video import EasyReader, EasyWriter
