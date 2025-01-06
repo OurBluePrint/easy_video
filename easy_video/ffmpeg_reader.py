@@ -12,6 +12,7 @@ class FFMPEGReader:
             pixel_format="rgb24",
             check_duration=True,
             target_resolution=None,
+            target_video_fps=None,
             resize_algo="bicubic",
             fps_source="fps",
             audio_fps=None,
@@ -32,8 +33,10 @@ class FFMPEGReader:
 
         self.video_proc = None
         self.video_found = infos["video_found"]
+        self.target_video_fps = target_video_fps
+
         if self.video_found:
-            self.video_fps = infos["video_fps"]
+            self.video_fps = infos["video_fps"] if self.target_video_fps is None else self.target_video_fps
             self.origin_size = infos["video_size"]
             self.origin_w, self.origin_h = self.origin_size
             
@@ -99,6 +102,7 @@ class FFMPEGReader:
             cmd = (
                 [FFMPEG_BINARY]
                 + ["-i", self.filename]
+                + (["-r", str(self.target_video_fps)] if self.target_video_fps is not None else [])
                 + [
                     "-loglevel",
                     "error",

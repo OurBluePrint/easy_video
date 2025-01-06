@@ -25,6 +25,7 @@ class EasyReader(FFMPEGReader):
             pixel_format="rgb24",
             check_duration=True,
             target_resolution=None,
+            target_video_fps=None,
             resize_algo="bicubic",
             fps_source="fps",
             ram_memory_max_usage=0.5,
@@ -40,6 +41,7 @@ class EasyReader(FFMPEGReader):
             pixel_format=pixel_format,
             check_duration=check_duration,
             target_resolution=target_resolution,
+            target_video_fps=target_video_fps,
             resize_algo=resize_algo,
             fps_source=fps_source,
             audio_fps=audio_fps,
@@ -260,4 +262,6 @@ if __name__ == '__main__':
     tmp = er.get_video_array()
     tmp_audio = er.get_audio_array()
     
+    import pdb; pdb.set_trace()
+
     print("done")
