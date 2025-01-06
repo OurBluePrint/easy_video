@@ -1,14 +1,29 @@
 # Easy Video
-Why do we need to use this repo?
-- Existing video and audio libraries are not easy to use for deep learning research
-    - For example, moviepy **drops frames or duplicates frames** when reading video. It is same for audio.
-    - The reason is they are not designed for deep learning research. They are designed for video utility. (One frame dropping/duplicating is not important for video utility, but **it is important for deep learning research**)
-- Usually, we need to convert video to png or jpg files and audio to wav files. It is not efficient if the dataset is large.
 
-What this repo can do?
-- Read and write video and audio
-- Memory efficient reading and writing
-- Provide easy conversion between numpy array and torch tensor
+## Why Use This Repository?
+
+Existing video and audio libraries often fall short when it comes to deep learning research. Here's why:
+
+- **Frame Integrity Issues**: Libraries like `moviepy` often drop or duplicate frames when reading video. The same issue occurs with audio.  
+  - These libraries are designed for general-purpose video processing, where occasional frame drops or duplicates don't matter.  
+  - However, for deep learning research, **maintaining frame and audio consistency is crucial**.
+
+- **Inefficient Workflows**: Working with large datasets usually involves converting videos into image sequences (e.g., PNG or JPG files) and audio into WAV files. This is time-consuming and inefficient, especially for large-scale datasets.
+
+## What Can This Repository Do?
+
+- **Efficient Video and Audio Handling**:  
+  Seamlessly read and write video and audio files without compromising data integrity.  
+
+- **Memory Efficiency**:  
+  Optimize memory usage for both reading and writing operations, making it scalable for large datasets.
+
+- **Deep Learning-Friendly Data Formats**:  
+  Effortlessly convert between `numpy` arrays and `torch` tensors, simplifying integration with deep learning workflows.
+
+---
+
+This repository is designed to streamline your workflow and eliminate the common pitfalls of existing video and audio libraries, allowing you to focus on your research.
 
 ## Notice
 - We only tested on mp4 format.
