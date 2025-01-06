@@ -17,7 +17,7 @@ class EasyWriter:
             video_size=None,
             audio_fps=None,
             audio_nbytes=2,
-            audio_nchannels=2,
+            audio_nchannels=1,
             is_raw_audio=False,
             silent=False
     ):

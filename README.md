@@ -39,6 +39,12 @@ reader = EasyReader(...,
                      )
 ```
 
+- 2024.11.10: EasyWriter silent mode.
+
+```python
+EasyWriter.writefile(..., silent=True)
+```
+
 
 ### read only video
 ```python

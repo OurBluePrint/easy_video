@@ -31,7 +31,7 @@ class EasyReader(FFMPEGReader):
             ram_memory_max_usage=0.5,
             audio_fps=None,
             audio_nbytes=2,
-            audio_nchannels=2,
+            audio_nchannels=1,
         ):
         super().__init__(
             filename,
