@@ -29,6 +29,7 @@ This repository is designed to streamline your workflow and eliminate the common
 - We only tested on mp4 format.
 - We only tested on Linux and MacOS.
 - We only tested on Python 3.11
+- We only tested on large-memory machines. (e.g., 256GB RAM) If you have a small-memory machine, you may encounter memory issues. Please let us know if you have any issues. (We tried to optimize memory usage as much as possible, but it may not be enough for small-memory machines.)
 
 ## Installation
 
