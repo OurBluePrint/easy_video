@@ -74,7 +74,8 @@ def array_video_to_tensor(video_array, _min=0, _max=1):
 
     if type(video_array) == torch.Tensor:
         return video_array
-    video_tensor = torch.tensor(video_array, dtype=torch.float32)
+    video_array = video_array.astype(np.float32)
+    video_tensor = torch.from_numpy(video_array)
     video_tensor = video_tensor.permute(0, 3, 1, 2)
     video_tensor = video_tensor / 255.
     video_tensor = video_tensor * (_max - _min) + _min
@@ -97,6 +98,7 @@ def tensor_video_to_array(video_tensor, _min=0, _max=1):
         return video_tensor
     video_tensor = video_tensor.clamp(_min, _max)
     video_tensor = (video_tensor + _min) / (_max - _min)
+    video_tensor = video_tensor.clamp(0, 1)
     video_tensor = video_tensor.cpu()
     video_tensor = video_tensor * 255.
     video_tensor = video_tensor.permute(0, 2, 3, 1)

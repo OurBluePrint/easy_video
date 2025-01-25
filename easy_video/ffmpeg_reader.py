@@ -6,6 +6,7 @@ class FFMPEGReader:
     def __init__(
             self,
             filename,
+            audiofilename=None,
             decode_file=True,
             print_infos=False,
             bufsize=None,
@@ -20,7 +21,7 @@ class FFMPEGReader:
             audio_nchannels=2,
         ):
         self.filename = filename
-
+        self.audiofilename = audiofilename if audiofilename is not None else filename
         infos = ffmpeg_parse_infos(
             filename,
             check_duration=check_duration,
@@ -135,7 +136,7 @@ class FFMPEGReader:
         if self.audio_proc is None:
             cmd = (
                 [FFMPEG_BINARY]
-                + ["-i", self.filename, "-vn"]
+                + ["-i", self.audiofilename, "-vn"]
                 + [
                     "-loglevel",
                     "error",
@@ -181,7 +182,10 @@ class FFMPEGReader:
             self.audio_proc = None
 
     def __del__(self):
-        self.close()
+        try:
+            self.close()
+        except Exception:
+            pass
 
 
 

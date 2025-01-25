@@ -17,6 +17,7 @@ class EasyReader(FFMPEGReader):
     def __init__(
             self,
             filename,
+            audiofilename=None,
             load_video=True,
             load_audio=False,
             decode_file=True,
@@ -35,6 +36,7 @@ class EasyReader(FFMPEGReader):
         ):
         super().__init__(
             filename,
+            audiofilename=audiofilename,
             decode_file=decode_file,
             print_infos=print_infos,
             bufsize=bufsize,
@@ -54,7 +56,7 @@ class EasyReader(FFMPEGReader):
     
         # get RAM Memory from the system
         ram_memory_max_system = psutil.virtual_memory().total
-        self.ram_memory_max = ram_memory_max_system * ram_memory_max_usage
+        self.ram_memory_max = int(ram_memory_max_system * ram_memory_max_usage)
 
     def initialize(self):
         if self.load_video:
