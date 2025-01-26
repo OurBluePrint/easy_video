@@ -254,16 +254,21 @@ class EasyReader(FFMPEGReader):
         return result
 
 if __name__ == '__main__':
-    er = EasyReader("/Users/kwonmingi/Codes/macocr/test_vid/vid12_xoobAzitHzs.mp4",
+    er = EasyReader("/mnt/CINELINGO_BACKUP/mingi/anycode/IMF/TalkingHeadTTS/TalkingHeadTTS/inputs/dataset_symbolic/CelebV_Text/celebvtext_6/-5UeNAAUcik_0_0.mp4",
+                    audiofilename="/mnt/CINELINGO_BACKUP/mingi/anycode/IMF/TalkingHeadTTS/TalkingHeadTTS/inputs/dataset_symbolic/CelebV_Text/celebvtext_audio/-5UeNAAUcik_0_0.m4a",
                     load_video=True,
-                    load_audio=True,
+                    load_audio=False,
+                    target_video_fps=25,
+                    target_resolution=(256, 256),
                     audio_fps=16000,
                     audio_nchannels=1,
                     )
     er.audio_fps
-    tmp = er.get_video_array()
-    tmp_audio = er.get_audio_array()
-    
+    tmp = er.get_video_array(start=110, end=120)
+    # tmp_audio = er.get_audio_array()
+
+    # tmp, tmp_a = er.get_video_array_audio_array(start=265, end=290)
+    # 
     import pdb; pdb.set_trace()
 
     print("done")

@@ -63,6 +63,8 @@ class FFMPEGReader:
 
             self.duration = infos["video_duration"]
             self.n_frames = infos["video_n_frames"] + 1 # n_frames is duration * fps. So, add 1 for some cases.
+            if self.target_video_fps is not None:
+                self.n_frames = int(self.duration * self.target_video_fps) + 1
             self.bitrate = infos["video_bitrate"]
 
             self.pixel_format = pixel_format
@@ -78,6 +80,14 @@ class FFMPEGReader:
             self.bufsize = bufsize
 
             self.frame_pos = 0
+
+        if self.audiofilename != filename:
+            infos = ffmpeg_parse_infos(
+                self.audiofilename,
+                check_duration=check_duration,
+                decode_file=decode_file,
+                print_infos=print_infos,
+            )
 
         self.audio_proc = None
         self.audio_found = infos["audio_found"]
