@@ -26,6 +26,7 @@ class EasyReader(FFMPEGReader):
             pixel_format="rgb24",
             check_duration=True,
             target_resolution=None,
+            target_resolution_ratio=None,
             target_video_fps=None,
             resize_algo="bicubic",
             fps_source="fps",
@@ -43,6 +44,7 @@ class EasyReader(FFMPEGReader):
             pixel_format=pixel_format,
             check_duration=check_duration,
             target_resolution=target_resolution,
+            target_resolution_ratio=target_resolution_ratio,
             target_video_fps=target_video_fps,
             resize_algo=resize_algo,
             fps_source=fps_source,
@@ -90,7 +92,7 @@ class EasyReader(FFMPEGReader):
     def video_array_chunk_iterator(self, chunksize=128, dtype=np.uint8):
         """
         Get video frames from the video process stdout
-        return a numpy array of shape (chunksize, h, w, depth), (0~255)
+        return a numpy array of shape (chunksize, w, h, depth), (0~255)
         """
         for i in range(0, self.n_frames, chunksize):
             array = self.get_frames(chunksize)
@@ -102,11 +104,13 @@ class EasyReader(FFMPEGReader):
     def video_array_audio_array_chunk_iterator(self, chunksize=128, dtype=np.uint8):
         """
         Get video frames from the video process stdout
-        return a numpy array of shape (chunksize, h, w, depth), (0~255), and audio array (audio_fps/video_fps) * chunksize, n_channels, (-1~1)
+        return a numpy array of shape (chunksize, w, h, depth), (0~255), and audio array (audio_fps/video_fps) * chunksize, n_channels, (-1~1)
         """
         for i in range(0, self.n_frames, chunksize):
             video_array = self.get_frames(chunksize)
             audio_array = self.get_audios(self.audio_n_frames_by_video_n_frames(chunksize))
+            if video_array.shape[0] == 0: # if the last chunk is empty,
+                break
             yield video_array, audio_array
 
     def get_video_array_random_frame(self, start=0, end=-1):
@@ -159,7 +163,7 @@ class EasyReader(FFMPEGReader):
     def get_video_array(self, start=0, end=-1):
         """
         Get all video frames from the video process stdout
-        return a numpy array of shape (n_frames, h, w, depth), (0~255)
+        return a numpy array of shape (n_frames, w, h, depth), (0~255)
         """
         start, end = self.check_start_end(start, end)
         
@@ -170,7 +174,7 @@ class EasyReader(FFMPEGReader):
     def get_video_array_audio_array(self, start=0, end=-1):
         """
         Get all video frames from the video process stdout
-        return a numpy array of shape (n_frames, h, w, depth), (0~255)
+        return a numpy array of shape (n_frames, w, h, depth), (0~255)
         """
         start, end = self.check_start_end(start, end)
         
@@ -221,7 +225,7 @@ class EasyReader(FFMPEGReader):
     def get_frames(self, n_frames):
         """
         Get n_frames from the video process stdout
-        return a numpy array of shape (n_frames, h, w, depth), (0~255)
+        return a numpy array of shape (n_frames, w, h, depth), (0~255)
         """
         if self.video_proc is None:
             raise Exception("Video not loaded")

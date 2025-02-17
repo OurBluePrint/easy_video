@@ -19,7 +19,8 @@ class EasyWriter:
             audio_nbytes=2,
             audio_nchannels=1,
             is_raw_audio=False,
-            silent=False
+            silent=False,
+            video_codec="libx264",
     ):
 
         if get_info_from != None:
@@ -36,6 +37,9 @@ class EasyWriter:
         
         if type(video_array) != type(None):
             assert video_fps != None
+
+            if video_size == None:
+                video_size = (video_array.shape[2], video_array.shape[1])
 
         if type(audio_array) != type(None):
             assert audio_fps != None
@@ -62,6 +66,7 @@ class EasyWriter:
                 filename,
                 size=video_size,
                 fps=video_fps,
+                codec=video_codec,
             )
             if not silent:
                 print("\033[92m Writing... \033[0m")
@@ -105,6 +110,7 @@ class EasyWriter:
                 size=video_size,
                 fps=video_fps,
                 audiofile=audio_tmp,
+                codec=video_codec,
             )
             if not silent:
                 print("\033[92m Writing... \033[0m")

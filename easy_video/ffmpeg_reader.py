@@ -13,8 +13,9 @@ class FFMPEGReader:
             pixel_format="rgb24",
             check_duration=True,
             target_resolution=None,
+            target_resolution_ratio=None,
             target_video_fps=None,
-            resize_algo="bicubic",
+            resize_algo="lanczos",
             fps_source="fps",
             audio_fps=None,
             audio_nbytes=2,
@@ -57,6 +58,17 @@ class FFMPEGReader:
                     self.size = (int(self.size[0] * ratio), int(self.size[1] * ratio))
                 else:
                     self.size = target_resolution
+            if target_resolution_ratio:
+                assert target_resolution is None
+                # round the resolution to the nearest even number
+                self.size = (int(self.size[0] * target_resolution_ratio) + int(int(self.size[0] * target_resolution_ratio) % 2),
+                             int(self.size[1] * target_resolution_ratio) + int(int(self.size[1] * target_resolution_ratio) % 2))
+
+                if self.size[0] * target_resolution_ratio - int(self.size[0] * target_resolution_ratio) != 0:
+                    print(f"Warning: target_resolution_ratio {target_resolution_ratio} is not a multiple of the original resolution of height. The resolution is rounded to {self.size}")
+                if self.size[1] * target_resolution_ratio - int(self.size[1] * target_resolution_ratio) != 0:
+                    print(f"Warning: target_resolution_ratio {target_resolution_ratio} is not a multiple of the original resolution of width. The resolution is rounded to {self.size}")
+
             self.w, self.h = self.size
 
             self.resize_algo = resize_algo
@@ -114,22 +126,25 @@ class FFMPEGReader:
                 [FFMPEG_BINARY]
                 + ["-i", self.filename]
                 + (["-r", str(self.target_video_fps)] if self.target_video_fps is not None else [])
-                + [
-                    "-loglevel",
-                    "error",
-                    "-f",
-                    "image2pipe",
+                + ["-loglevel", "error", "-f", "image2pipe"]
+            )
+
+            # 리사이징이 필요한 경우에만 관련 명령어 추가
+            if self.size != self.origin_size:
+                cmd += [
                     "-vf",
                     "scale=%d:%d" % tuple(self.size),
                     "-sws_flags",
                     self.resize_algo,
-                    "-pix_fmt",
-                    self.pixel_format,
-                    "-vcodec",
-                    "rawvideo",
-                    "-",
                 ]
-            )
+
+            cmd += [
+                "-pix_fmt",
+                self.pixel_format,
+                "-vcodec",
+                "rawvideo",
+                "-",
+            ]
 
             popen_params = cross_platform_popen_params(
                 {

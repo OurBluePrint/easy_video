@@ -172,7 +172,7 @@ class FFMPEG_VideoWriter:
         fps,
         codec="libx264",
         audiofile=None,
-        preset="medium",
+        preset="slow",
         bitrate=None,
         with_mask=False,
         logfile=None,
@@ -220,8 +220,11 @@ class FFMPEG_VideoWriter:
         if threads is not None:
             cmd.extend(["-threads", str(threads)])
 
-        if (codec == "libx264") and (size[0] % 2 == 0) and (size[1] % 2 == 0):
-            cmd.extend(["-pix_fmt", "yuv420p"])
+        if (codec == "libx264"):
+            # cmd.extend(["-crf", "0",])
+            if (size[0] % 2 == 0) and (size[1] % 2 == 0):
+                cmd.extend(["-pix_fmt", "yuv420p"])
+
         cmd.extend([filename])
 
         popen_params = cross_platform_popen_params(
