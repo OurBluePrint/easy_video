@@ -192,6 +192,16 @@ class EasyReader(FFMPEGReader):
         max_audio_n_frames = (round(self.audio_duration) + 1) * self.audio_fps
         return self.get_audios(max_audio_n_frames, is_raw_audio=is_raw_audio)
 
+    def get_video_array_frames(self, n_frames):
+        return self.get_frames(n_frames)
+    
+    def get_audio_array_frames(self, n_frames):
+        audio_n_frames = self.audio_n_frames_by_video_n_frames(n_frames)
+        return self.get_audios(audio_n_frames)
+    
+    def get_video_array_audio_array_frames(self, n_frames):
+        return self.get_video_array_frames(n_frames), self.get_audio_array_frames(n_frames)
+
     def audio_n_frames_by_video_n_frames(self, n_frames):
         """Get audio n_frames by video n_frames"""
         exact_min = int(n_frames // self.video_fps)
