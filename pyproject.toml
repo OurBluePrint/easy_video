@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "easy_video"
+version = "0.1"
+description = "A lightweight video processing library"
+authors = [{ name = "Your Name", email = "your.email@example.com" }]
+license = { text = "MIT" }
+readme = "README.md"
+dependencies = [
+    "numpy",
+    "psutil",
+    "tqdm"
+]
+
+[tool.setuptools]
+packages = { find = {} }

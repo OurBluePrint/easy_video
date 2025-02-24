@@ -85,6 +85,7 @@ class EasyReader(FFMPEGReader):
         
         if end == -1:
             end = self.n_frames
+            self.now_frame = end # if end is -1, then end is the last frame
 
         return start, end
 
@@ -206,7 +207,7 @@ class EasyReader(FFMPEGReader):
         """Get audio n_frames by video n_frames"""
         exact_min = int(n_frames // self.video_fps)
         frames_sec = int(n_frames % self.video_fps)
-        audio_n_frames = exact_min * self.audio_fps + frames_sec * self.per_frame_audio_frames
+        audio_n_frames = int(exact_min * self.audio_fps + frames_sec * self.per_frame_audio_frames)
         return audio_n_frames
 
     def throw_away_audio_per_frames(self, n_frames):
@@ -254,7 +255,7 @@ class EasyReader(FFMPEGReader):
         if self.audio_proc is None:
             raise Exception("Audio not loaded")
         
-        read_nbytes = audio_n_frames * self.audio_nchannels * self.audio_nbytes
+        read_nbytes = int(audio_n_frames * self.audio_nchannels * self.audio_nbytes)
 
         s = self.audio_proc.stdout.read(read_nbytes)
 

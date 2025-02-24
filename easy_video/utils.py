@@ -42,24 +42,24 @@ def convert_to_seconds(time):
     return sum(mult * part for mult, part in zip(factors, reversed(time)))
 
 
-def mp4list(path, pass_hidden_folders=True, sort=False):
+def mp4list(path, pass_hidden_folders=True, sort=False, ext='.mp4'):
     """
     Get all mp4 files in the given path. but not in the .subfolders (hidden folders)
     """
-    if path.endswith(".mp4"):
+    if path.endswith(ext):
         return [path]
     mp4_files = []
     for root, dirs, files in os.walk(path):
         if pass_hidden_folders and any(part.startswith('.') for part in root.split(os.sep)):
             continue
         for file in files:
-            if file.endswith(".mp4"):
+            if file.endswith(ext):
                 mp4_files.append(os.path.join(root, file))
     if sort:
         mp4_files = natsorted(mp4_files)
     return mp4_files
 
-def wavlist(path, pass_hidden_folders=True):
+def wavlist(path, pass_hidden_folders=True, sort=False):
     """
     Get all mp4 files in the given path. but not in the .subfolders (hidden folders)
     """
@@ -72,6 +72,8 @@ def wavlist(path, pass_hidden_folders=True):
         for file in files:
             if file.endswith(".wav"):
                 mp4_files.append(os.path.join(root, file))
+    if sort:
+        mp4_files = natsorted(mp4_files)
     return mp4_files
 
 
