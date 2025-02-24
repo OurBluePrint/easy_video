@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "easy_video"
-version = "0.1"
+version = "0.2"
 description = "A lightweight video processing library"
 authors = [{ name = "Your Name", email = "your.email@example.com" }]
 license = { text = "MIT" }
