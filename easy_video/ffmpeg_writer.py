@@ -75,10 +75,14 @@ class FFMPEG_AudioWriter:
         audio_array = (audio_array * 2 ** (8 * self.nbytes - 1)).astype(f"int{8*self.nbytes}")
         return audio_array.tobytes()
 
-    def write_frames_chunk(self, frames_array):
+    def write_frames_chunk(self, frames_array, silent=False):
         """TODO: add documentation"""
+        if silent:
+            tqdm_ = lambda x: x
+        else:
+            from tqdm import tqdm as tqdm_
         try:
-            for inx in tqdm(range(0, len(frames_array), self.chunk_size)):
+            for inx in tqdm_(range(0, len(frames_array), self.chunk_size)):
                 self.write_frames(frames_array[inx:inx+self.chunk_size])
         except IOError as err:
             self.raise_IOError(err)
@@ -238,9 +242,13 @@ class FFMPEG_VideoWriter:
         except IOError as err:
             self.raise_IOError(err)
 
-    def write_frames_chunk(self, frames_array):
+    def write_frames_chunk(self, frames_array, silent=False):
+        if silent:
+            tqdm_ = lambda x: x
+        else:
+            from tqdm import tqdm as tqdm_
         try:
-            for frame in tqdm(frames_array):
+            for frame in tqdm_(frames_array):
                 self.write_frame(frame)
         except IOError as err:
             self.raise_IOError(err)

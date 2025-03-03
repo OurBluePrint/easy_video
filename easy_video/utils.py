@@ -42,10 +42,12 @@ def convert_to_seconds(time):
     return sum(mult * part for mult, part in zip(factors, reversed(time)))
 
 
-def mp4list(path, pass_hidden_folders=True, sort=False, ext='.mp4'):
+def mp4list(path, pass_hidden_folders=True, sort=False, ext='mp4'):
     """
     Get all mp4 files in the given path. but not in the .subfolders (hidden folders)
     """
+    if not '.' in ext:
+        ext = '.' + ext
     if path.endswith(ext):
         return [path]
     mp4_files = []

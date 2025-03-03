@@ -56,7 +56,7 @@ class EasyWriter:
             )
             if not silent:
                 print("\033[92m Writing... \033[0m")
-            audio_clip.write_frames_chunk(audio_array)
+            audio_clip.write_frames_chunk(audio_array, silent=silent)
             if not silent:
                 print(f"\033[92m Done...!! Saved at {filename}\033[0m")
             audio_clip.close()
@@ -70,7 +70,7 @@ class EasyWriter:
             )
             if not silent:
                 print("\033[92m Writing... \033[0m")
-            video_clip.write_frames_chunk(video_array)
+            video_clip.write_frames_chunk(video_array, silent=silent)
             if not silent:
                 print(f"\033[92m Done...!! Saved at {filename}\033[0m")
             video_clip.close()
@@ -102,7 +102,7 @@ class EasyWriter:
                 )
                 if not silent:
                     print("\033[92m Audio Writing... \033[0m")
-                audio_clip.write_frames_chunk(audio_array)
+                audio_clip.write_frames_chunk(audio_array, silent=silent)
                 audio_clip.close()
 
             video_clip = FFMPEG_VideoWriter(
@@ -114,7 +114,7 @@ class EasyWriter:
             )
             if not silent:
                 print("\033[92m Writing... \033[0m")
-            video_clip.write_frames_chunk(video_array)
+            video_clip.write_frames_chunk(video_array, silent=silent)
             if not silent:
                 print(f"\033[92m Done...!! Saved at {filename}\033[0m")
             video_clip.close()
